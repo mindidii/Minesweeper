@@ -58,23 +58,23 @@ MVVM 패턴을 준수하여 제작된 윈도우 지뢰찾기 아이디어를 기
 <br>
 
 ##### 📂 프로젝트 구조
-MinesweeperProject
-┣ 📂 Models
-┃ ┣ 📜 Cell.cs          # 지뢰 칸 속성 (IsMine, IsOpened 등)
-┃ ┣ 📜 SaveData.cs      # 저장 파일 구조체
-┃ ┗ 📜 RankingData.cs   # 랭킹 데이터 구조체
-┣ 📂 ViewModels
-┃ ┣ 📜 MainViewModel.cs    # 화면 전환 및 윈도우 속성 제어
-┃ ┣ 📜 LoginViewModel.cs   # 사용자 로그인 처리
-┃ ┣ 📜 GameViewModel.cs    # 지뢰 로직, 타이머, 승패 판정
-┃ ┗ 📜 RankingViewModel.cs # 랭킹 가공 및 메달 배정
-┣ 📂 Views
-┃ ┣ 📜 GameView.xaml       # 지뢰판 및 애니메이션 레이어
-┃ ┗ 📜 RankingView.xaml    # 명예의 전당 UI (ItemsControl 중첩)
-┣ 📂 Services
-┃ ┗ 📜 RelayCommand.cs     # 커맨드 바인딩 공통 클래스
-┗ 📜 App.xaml              # 데이터 템플릿(View-ViewModel 매핑) 정의
-(일부 생략)
+MinesweeperProject<br>
+┣ 📂 Models<br>
+┃ ┣ 📜 Cell.cs          # 지뢰 칸 속성 (IsMine, IsOpened 등)<br>
+┃ ┣ 📜 SaveData.cs      # 저장 파일 구조체<br>
+┃ ┗ 📜 RankingData.cs   # 랭킹 데이터 구조체<br>
+┣ 📂 ViewModels<br>
+┃ ┣ 📜 MainViewModel.cs    # 화면 전환 및 윈도우 속성 제어<br>
+┃ ┣ 📜 LoginViewModel.cs   # 사용자 로그인 처리<br>
+┃ ┣ 📜 GameViewModel.cs    # 지뢰 로직, 타이머, 승패 판정<br>
+┃ ┗ 📜 RankingViewModel.cs # 랭킹 가공 및 메달 배정<br>
+┣ 📂 Views<br>
+┃ ┣ 📜 GameView.xaml       # 지뢰판 및 애니메이션 레이어<br>
+┃ ┗ 📜 RankingView.xaml    # 명예의 전당 UI (ItemsControl 중첩)<br>
+┣ 📂 Services<br>
+┃ ┗ 📜 RelayCommand.cs     # 커맨드 바인딩 공통 클래스<br>
+┗ 📜 App.xaml              # 데이터 템플릿(View-ViewModel 매핑) 정의<br>
+(일부 생략)<br>
 <br>
 
 ##### 🚀 실행 방법 (Getting Started)
