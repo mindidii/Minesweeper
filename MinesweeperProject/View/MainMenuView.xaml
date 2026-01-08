@@ -1,0 +1,47 @@
+<UserControl x:Class="MinesweeperProject.View.MainMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#F3F3F3">
+    <Grid>
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
+            <Border Background="White" 
+                    CornerRadius="10" 
+                    Padding="15" 
+                    Margin="0,0,0,30" 
+                    BorderBrush="#DDDDDD" 
+                    BorderThickness="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <TextBlock Text="👤 " FontSize="18"/>
+                    <TextBlock Text="{Binding DisplayName}" 
+                               FontSize="18" 
+                               FontWeight="Bold" 
+                               Foreground="#333333"/>
+                </StackPanel>
+            </Border>
+            <TextBlock Text="난이도 선택" Foreground="Gray" Margin="0,0,0,5"/>
+            <UniformGrid Columns="2" Margin="0,0,0,20">
+                <Button Content="쉬움 (10x10)" Command="{Binding StartGameCommand}" CommandParameter="쉬움" Margin="2" Height="40"/>
+                <Button Content="보통 (20x20)" Command="{Binding StartGameCommand}" CommandParameter="보통" Margin="2" Height="40"/>
+                <Button Content="어려움 (30x30)" Command="{Binding StartGameCommand}" CommandParameter="어려움" Margin="2" Height="40"/>
+                <Button Content="극한 (30x60)" Command="{Binding StartGameCommand}" CommandParameter="극한" Margin="2" Height="40" Background="#FFE0E0"/>
+            </UniformGrid>
+
+        <Button Content="게임 이어하기" 
+            Command="{Binding LoadGameCommand}" 
+            Height="45" Margin="0,5">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Style.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.5"/>
+                                <Setter Property="ToolTip" Value="저장된 게임 파일이 없습니다."/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+            </Button>
+            <Button Content="랭킹 확인" Command="{Binding ShowRankingCommand}" Height="45" Margin="0,5"/>
+            <Button Content="프로그램 종료" Command="{Binding ExitCommand}" Height="45" Margin="0,20" Background="#FFEBEE"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
