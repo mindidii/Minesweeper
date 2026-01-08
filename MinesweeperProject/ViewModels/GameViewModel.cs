@@ -14,26 +14,30 @@ namespace MinesweeperProject.ViewModels
         private readonly MainViewModel _mainParent;
         public ObservableCollection<Cell> Cells { get; } = new();
 
-        public int Rows { get; private set; }
-        public int Cols { get; private set; }
-        public int MineCount { get; private set; }
-        private bool _isFirstClick = true;
-        public ICommand OpenCellCommand { get; }
-        public ICommand ReturnToMenuCommand { get; }
-        public bool IsGameWon
+        public int Rows { get; private set; } // 열 정보
+        public int Cols { get; private set; } // 행 정보
+        public int MineCount { get; private set; } // 지뢰 개수
+        private bool _isFirstClick = true; // 첫 클릭 여부
+        public ICommand OpenCellCommand { get; } // 셀 열기 명령
+        public ICommand ReturnToMenuCommand { get; } // 메뉴로 돌아가기 명령
+        public bool IsGameWon // 게임 승리 여부
         {
             get => _isGameWon;
             set => SetProperty(ref _isGameWon, value);
         }
-
-        public ICommand FlagCellCommand { get; }
-        private bool _isGameWon;
-        private DispatcherTimer _timer;
-        private int _currentTime;
-        private bool _isTimerRunning;
-        public string TimeDisplay => $"{CurrentTime / 60:D2}:{CurrentTime % 60:D2}";
-        public string DifficultyName { get; private set; }
-        public GameViewModel(string difficulty, MainViewModel mainParent)
+        public int CurrentTime // 현재 시간 속성
+        {
+            get => _currentTime;
+            set => SetProperty(ref _currentTime, value);
+        }
+        public ICommand FlagCellCommand { get; } // 셀 깃발 명령
+        private bool _isGameWon; // 게임 승리 여부 저장
+        private DispatcherTimer _timer; // 타이머
+        private int _currentTime; // 현재 시간
+        private bool _isTimerRunning; // 타이머 실행 여부
+        public string TimeDisplay => $"{CurrentTime / 60:D2}:{CurrentTime % 60:D2}"; // 시간 표시 형식
+        public string DifficultyName { get; private set; } // 난이도 이름 (랭킹 저장용)
+        public GameViewModel(string difficulty, MainViewModel mainParent) // 일반 게임 생성자
         {
             _mainParent = mainParent;
             SetDifficulty(difficulty);
@@ -52,18 +56,7 @@ namespace MinesweeperProject.ViewModels
             SetupTimer();
         }
 
-        private void SetDifficulty(string difficulty)
-        {
-            switch (difficulty)
-            {
-                case "쉬움": Rows = 10; Cols = 10; MineCount = 5; break;
-                case "보통": Rows = 20; Cols = 20; MineCount = 40; break;
-                case "어려움": Rows = 30; Cols = 30; MineCount = 150; break;
-                case "극한": Rows = 30; Cols = 60; MineCount = 400; break;
-            }
-        }
-
-        public GameViewModel(SaveData saveData, MainViewModel mainParent)
+        public GameViewModel(SaveData saveData, MainViewModel mainParent) // 저장된 게임 복원 생성자
         {
             _mainParent = mainParent;
             this.DifficultyName = saveData.DifficultyName;
@@ -72,7 +65,7 @@ namespace MinesweeperProject.ViewModels
             this.MineCount = saveData.MineCount;
 
             Cells.Clear();
-            foreach (var state in saveData.Cells)
+            foreach (var state in saveData.Cells) // 셀 정보 불러오기
             {
                 var cell = new Cell(state.Row, state.Col)
                 {
@@ -100,7 +93,18 @@ namespace MinesweeperProject.ViewModels
             OnPropertyChanged(nameof(TimeDisplay));
         }
 
-        private void SetupTimer()
+        private void SetDifficulty(string difficulty) // 난이도 설정 함수
+        {
+            switch (difficulty)
+            {
+                case "쉬움": Rows = 10; Cols = 10; MineCount = 5; break;
+                case "보통": Rows = 20; Cols = 20; MineCount = 40; break;
+                case "어려움": Rows = 30; Cols = 30; MineCount = 150; break;
+                case "극한": Rows = 30; Cols = 60; MineCount = 400; break;
+            }
+        }
+
+        private void SetupTimer() // 타이머 설정 함수
         {
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
@@ -110,7 +114,7 @@ namespace MinesweeperProject.ViewModels
             };
         }
 
-        private void InitializeBoard()
+        private void InitializeBoard() // 게임 보드 초기화 함수 (지뢰 생성 없음)
         {
             Cells.Clear();
             for (int r = 0; r < Rows; r++)
@@ -125,7 +129,7 @@ namespace MinesweeperProject.ViewModels
             IsGameWon = false;
         }
 
-        private void PlaceMines(Cell firstCell)
+        private void PlaceMines(Cell firstCell) // 첫 클릭 후, 지뢰 배치 함수
         {
             Random rand = new Random();
 
@@ -145,7 +149,7 @@ namespace MinesweeperProject.ViewModels
             }
         }
 
-        public void OpenCell(Cell? cell)
+        public void OpenCell(Cell? cell) // 셀 열기 함수
         {
             if (cell == null || cell.IsOpened || cell.IsFlagged) return;
 
@@ -181,7 +185,7 @@ namespace MinesweeperProject.ViewModels
             CheckWin();
         }
 
-        private IEnumerable<Cell> GetNeighbors(Cell cell)
+        private IEnumerable<Cell> GetNeighbors(Cell cell) // 인접 셀 정보 확인 함수
         {
             for (int r = cell.Row - 1; r <= cell.Row + 1; r++)
             {
@@ -196,13 +200,13 @@ namespace MinesweeperProject.ViewModels
             }
         }
 
-        public void FlagCell(Cell? cell)
+        public void FlagCell(Cell? cell) // 깃발 설치 함수
         {
             if (cell == null || cell.IsOpened) return;
             cell.IsFlagged = !cell.IsFlagged;
         }
 
-        private void GameOver(bool isWin)
+        private void GameOver(bool isWin) // 게임 종료 처리 함수
         {
             if (isWin)
             {
@@ -217,7 +221,7 @@ namespace MinesweeperProject.ViewModels
         }
 
 
-        private void CheckWin()
+        private void CheckWin() // 승리 조건 확인 함수
         {
 
             bool won = Cells.Where(c => !c.IsMine).All(c => c.IsOpened);
@@ -230,7 +234,7 @@ namespace MinesweeperProject.ViewModels
             }
         }
 
-        public void SaveGame()
+        public void SaveGame() // 게임 저장 함수
         {
             var saveData = new SaveData
             {
@@ -255,10 +259,6 @@ namespace MinesweeperProject.ViewModels
             File.WriteAllText("savegame.json", json);
         }
 
-        public int CurrentTime
-        {
-            get => _currentTime;
-            set => SetProperty(ref _currentTime, value);
-        }
+        
     }
 }
