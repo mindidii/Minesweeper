@@ -3,6 +3,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              Background="#F3F3F3">
     <Grid>
+        <Button Command="{Binding OpenSettingCommand}"
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Top" 
+            Margin="15"
+            Background="Transparent"
+            BorderThickness="0"
+            Cursor="Hand">
+            <TextBlock Text="⚙️" FontSize="28" Foreground="#444444"/>
+
+            <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="RenderTransform">
+                                <Setter.Value>
+                                    <RotateTransform Angle="30"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="300">
             <Border Background="White" 
                     CornerRadius="10" 
