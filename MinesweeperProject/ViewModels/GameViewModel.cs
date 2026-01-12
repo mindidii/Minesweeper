@@ -97,7 +97,7 @@ namespace MinesweeperProject.ViewModels
         {
             switch (difficulty)
             {
-                case "쉬움": Rows = 10; Cols = 10; MineCount = 5; break;
+                case "쉬움": Rows = 10; Cols = 10; MineCount = 6; break;
                 case "보통": Rows = 20; Cols = 20; MineCount = 40; break;
                 case "어려움": Rows = 30; Cols = 30; MineCount = 150; break;
                 case "극한": Rows = 30; Cols = 60; MineCount = 400; break;
