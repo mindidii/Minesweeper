@@ -12,7 +12,6 @@ namespace MinesweeperProject.ViewModels
         public ICommand LoadGameCommand { get; }
         public ICommand OpenSettingCommand { get; }
         public ICommand ExitCommand { get; }
-
         public ICommand ShowRankingCommand { get; }
         public string DisplayName => $"현재 사용자: {_mainParent.Nickname ?? "Guest"}";
         public MainMenuViewModel(MainViewModel mainParent)
