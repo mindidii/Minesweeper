@@ -1,7 +1,9 @@
 ﻿using MinesweeperProject.Models;
-using System.Windows;
-using System.Text.Json;
+using MinesweeperProject.Services;
 using System.IO;
+using System.Text.Json;
+using System.Windows;
+using System.Windows.Input;
 
 // ViewModels/MainViewModel.cs
 namespace MinesweeperProject.ViewModels
@@ -14,7 +16,7 @@ namespace MinesweeperProject.ViewModels
             get => _windowSizeToContent;
             set => SetProperty(ref _windowSizeToContent, value);
         }
-
+        public ICommand ShowSettingCommand { get; } // 설정 창 전환 커맨드
         // 창의 기본 가로/세로 크기도 바인딩할 수 있도록 추가
         private double _windowWidth = 400;
         public double WindowWidth { get => _windowWidth; set => SetProperty(ref _windowWidth, value); }
@@ -40,6 +42,7 @@ namespace MinesweeperProject.ViewModels
 
         public MainViewModel()
         {
+            ShowSettingCommand = new RelayCommand(o => ShowSettingView());
             ShowLoginView();
         }
 
@@ -131,6 +134,14 @@ namespace MinesweeperProject.ViewModels
             WindowWidth = 400;
             WindowHeight = 550;
             CurrentViewModel = new RankingViewModel(this);
+        }
+
+        public void ShowSettingView()
+        {
+            WindowSizeToContent = SizeToContent.Manual;
+            WindowWidth = 400;
+            WindowHeight = 450;
+            CurrentViewModel = new SettingViewModel(this);
         }
     }
 }
